@@ -34,7 +34,7 @@ const NewTodo = () => {
 };
 
 // A single todo component, either 'not done' or 'done': press to toggle.
-const Todo = observer(({ todo }) => {
+const Todo = ({ todo }) => {
   console.log(todo);
   const handlePress = () => {
     console.log(todo.id);
@@ -50,10 +50,12 @@ const Todo = observer(({ todo }) => {
       </Text>
     </TouchableOpacity>
   );
-});
+};
 
 // A list component to show all the todos.
-const Todos = observer(({ todos }) => {
+const Todos = observer(({ todos$ }) => {
+  // Get the todos from the state and subscribe to updates
+ const todos = todos$.get();
   const renderItem = ({ item: todo }) => <Todo todo={todo} />;
   return (
     <FlatList
@@ -78,14 +80,12 @@ const ClearTodos = () => {
 
 // The main app.
 const App = observer(() => {
-  const todos = todos$.get();
-
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
         <Text style={styles.heading}>TinyBase Example</Text>
         <NewTodo />
-        <Todos todos={todos} />
+        <Todos todos$={todos$} />
         <ClearTodos />
       </SafeAreaView>
     </SafeAreaProvider>
