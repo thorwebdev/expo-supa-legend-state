@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { observer } from '@legendapp/state/react';
-import { todos$ } from './utils/SupaLegend';
+import { addTodo, todos$ } from './utils/SupaLegend';
 
 // Emojis to decorate each todo.
 const NOT_DONE_ICON = String.fromCodePoint('0x1F7E0');
@@ -19,8 +19,7 @@ const NewTodo = () => {
   const [text, setText] = useState('');
   const handleSubmitEditing = ({ nativeEvent: { text } }) => {
     setText('');
-    console.log(text);
-    return { text, done: false };
+    addTodo(text);
   };
   return (
     <TextInput

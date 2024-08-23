@@ -26,6 +26,11 @@ const supabase = createClient(
 const generateId = () => uuidv4();
 configureSyncedSupabase({
   generateId,
+  changesSince: 'last-sync',
+  fieldCreatedAt: 'created_at',
+  fieldUpdatedAt: 'updated_at',
+  // Optionally enable soft deletes
+  fieldDeleted: 'deleted',
 });
 const uid = '';
 
@@ -41,10 +46,7 @@ export const todos$ = observable(
     // Don't allow delete
     actions: ['read', 'create', 'update'],
     // Realtime filter by user_id
-    realtime: {
-      schema: 'public',
-      // filter: `user_id=eq.${uid}` // TODO: add auth
-    },
+    realtime: true,
     // Persist data and pending changes locally
     persist: { name: 'todos', retrySync: true },
     // Sync only diffs
