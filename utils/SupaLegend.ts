@@ -24,6 +24,7 @@ const supabase = createClient(
 
 // provide a function to generate ids locally
 const generateId = () => uuidv4();
+// Set global configuration
 configureSyncedSupabase({
   generateId,
   changesSince: "last-sync",
@@ -40,17 +41,16 @@ export const todos$ = observable(
     collection: "todos",
     // Optional:
     // Select only id and text fields
-    select: (from) => from.select("id,counter,text,done"),
+    select: (from) =>
+      from.select("id,counter,text,done,created_at,updated_at,deleted"),
     // Filter by the current user
     // filter: (select) => select.eq('user_id', uid),
     // Don't allow delete
-    actions: ["read", "create", "update"],
+    actions: ["read", "create", "update", "delete"],
     // Realtime filter by user_id
     realtime: true,
     // Persist data and pending changes locally
     persist: { name: "todos", retrySync: true },
-    // Sync only diffs
-    changesSince: "last-sync",
   }),
 );
 
