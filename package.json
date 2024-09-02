@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "@expo/metro-runtime": "~3.2.1",
-    "@legendapp/state": "^3.0.0-alpha.29",
+    "@legendapp/state": "^3.0.0-alpha.33",
     "@supabase/supabase-js": "^2.45.1",
     "@types/react": "~18.2.79",
     "expo": "^51.0.24",

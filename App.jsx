@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { observer } from '@legendapp/state/react';
-import { addTodo, todos$ } from './utils/SupaLegend';
+import { addTodo, todos$, toggleDone } from './utils/SupaLegend';
 
 // Emojis to decorate each todo.
 const NOT_DONE_ICON = String.fromCodePoint('0x1F7E0');
@@ -36,7 +36,7 @@ const NewTodo = () => {
 const Todo = ({ todo }) => {
   console.log(todo);
   const handlePress = () => {
-    console.log(todo.id);
+    toggleDone(todo.id);
   };
   return (
     <TouchableOpacity
@@ -54,7 +54,7 @@ const Todo = ({ todo }) => {
 // A list component to show all the todos.
 const Todos = observer(({ todos$ }) => {
   // Get the todos from the state and subscribe to updates
- const todos = todos$.get();
+  const todos = todos$.get();
   const renderItem = ({ item: todo }) => <Todo todo={todo} />;
   return (
     <FlatList
