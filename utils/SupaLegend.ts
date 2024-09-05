@@ -50,7 +50,13 @@ export const todos$ = observable(
     // Realtime filter by user_id
     realtime: true,
     // Persist data and pending changes locally
-    persist: { name: "todos", retrySync: true },
+    persist: {
+      name: "todos",
+      retrySync: true, // Persist pending changes and retry
+    },
+    retry: {
+      infinite: true, // Retry changes with exponential backoff
+    },
   }),
 );
 
