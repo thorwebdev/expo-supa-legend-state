@@ -56,13 +56,16 @@ const Todos = observer(({ todos$ }) => {
   // Get the todos from the state and subscribe to updates
   const todos = todos$.get();
   const renderItem = ({ item: todo }) => <Todo todo={todo} />;
-  return (
-    <FlatList
-      data={Object.values(todos)}
-      renderItem={renderItem}
-      style={styles.todos}
-    />
-  );
+  if (todos)
+    return (
+      <FlatList
+        data={Object.values(todos)}
+        renderItem={renderItem}
+        style={styles.todos}
+      />
+    );
+
+  return <></>;
 });
 
 // A button component to delete all the todos, only shows when there are some.
@@ -82,7 +85,7 @@ const App = observer(() => {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
-        <Text style={styles.heading}>TinyBase Example</Text>
+        <Text style={styles.heading}>LegendState Example</Text>
         <NewTodo />
         <Todos todos$={todos$} />
         <ClearTodos />
