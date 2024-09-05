@@ -5,6 +5,7 @@ import {
   configureSyncedSupabase,
   syncedSupabase,
 } from "@legendapp/state/sync-plugins/supabase";
+import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
 import { configureObservableSync } from "@legendapp/state/sync";
 import { ObservablePersistMMKV } from "@legendapp/state/persist-plugins/mmkv";
