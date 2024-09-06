@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-// import { Database } from './database.types'; // TODO
+import { Database } from "./database.types";
 import { observable } from "@legendapp/state";
 import {
   configureSyncedSupabase,
@@ -18,7 +18,7 @@ configureObservableSync({
   },
 });
 
-const supabase = createClient(
+const supabase = createClient<Database>(
   process.env.EXPO_PUBLIC_SUPABASE_URL,
   process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY,
 );
