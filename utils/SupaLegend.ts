@@ -1,22 +1,11 @@
 import { createClient } from "@supabase/supabase-js";
 // import { Database } from './database.types'; // TODO
 import { observable } from "@legendapp/state";
-import {
-  configureSyncedSupabase,
-  syncedSupabase,
-} from "@legendapp/state/sync-plugins/supabase";
+import { syncedSupabase } from "@legendapp/state/sync-plugins/supabase";
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
-import { configureObservableSync } from "@legendapp/state/sync";
+import { configureSynced } from "@legendapp/state/sync";
 import { ObservablePersistMMKV } from "@legendapp/state/persist-plugins/mmkv";
-
-// Global configuration
-configureObservableSync({
-  // Use react-native-mmkv in React Native
-  persist: {
-    plugin: ObservablePersistMMKV,
-  },
-});
 
 const supabase = createClient(
   process.env.EXPO_PUBLIC_SUPABASE_URL,
@@ -25,20 +14,25 @@ const supabase = createClient(
 
 // provide a function to generate ids locally
 const generateId = () => uuidv4();
-// Set global configuration
-configureSyncedSupabase({
-  generateId,
-  changesSince: "last-sync",
-  fieldCreatedAt: "created_at",
-  fieldUpdatedAt: "updated_at",
-  // Optionally enable soft deletes
-  fieldDeleted: "deleted",
-});
+
+// Create a configured sync function
+const customSynced = configureSynced(syncedSupabase, {
+    // Use react-native-mmkv in React Native
+    persist: {
+      plugin: ObservablePersistMMKV,
+    },
+    generateId,
+    supabase,
+    changesSince: "last-sync",
+    fieldCreatedAt: "created_at",
+    fieldUpdatedAt: "updated_at",
+    // Optionally enable soft deletes
+    fieldDeleted: "deleted",
+})
 const uid = "";
 
 export const todos$ = observable(
-  syncedSupabase({
-    supabase,
+  customSynced({
     collection: "todos",
     // Optional:
     // Select only id and text fields
