@@ -8,11 +8,12 @@ import {
 } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { observer } from '@legendapp/state/react';
-import { addTodo, todos$, toggleDone } from './utils/SupaLegend';
+import { addTodo, todos$ as _todos$, toggleDone } from './utils/SupaLegend';
+import { Tables } from './utils/database.types';
 
 // Emojis to decorate each todo.
-const NOT_DONE_ICON = String.fromCodePoint('0x1F7E0');
-const DONE_ICON = String.fromCodePoint('0x2705');
+const NOT_DONE_ICON = String.fromCodePoint(0x1f7e0);
+const DONE_ICON = String.fromCodePoint(0x2705);
 
 // The text input component to add a new todo.
 const NewTodo = () => {
@@ -33,8 +34,7 @@ const NewTodo = () => {
 };
 
 // A single todo component, either 'not done' or 'done': press to toggle.
-const Todo = ({ todo }) => {
-  console.log(todo);
+const Todo = ({ todo }: { todo: Tables<'todos'> }) => {
   const handlePress = () => {
     toggleDone(todo.id);
   };
@@ -52,10 +52,12 @@ const Todo = ({ todo }) => {
 };
 
 // A list component to show all the todos.
-const Todos = observer(({ todos$ }) => {
+const Todos = observer(({ todos$ }: { todos$: typeof _todos$ }) => {
   // Get the todos from the state and subscribe to updates
   const todos = todos$.get();
-  const renderItem = ({ item: todo }) => <Todo todo={todo} />;
+  const renderItem = ({ item: todo }: { item: Tables<'todos'> }) => (
+    <Todo todo={todo} />
+  );
   if (todos)
     return (
       <FlatList
@@ -87,7 +89,7 @@ const App = observer(() => {
       <SafeAreaView style={styles.container}>
         <Text style={styles.heading}>LegendState Example</Text>
         <NewTodo />
-        <Todos todos$={todos$} />
+        <Todos todos$={_todos$} />
         <ClearTodos />
       </SafeAreaView>
     </SafeAreaProvider>

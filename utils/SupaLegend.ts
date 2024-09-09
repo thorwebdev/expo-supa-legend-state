@@ -33,6 +33,7 @@ const uid = "";
 
 export const todos$ = observable(
   customSynced({
+    supabase,
     collection: "todos",
     // Optional:
     // Select only id and text fields
