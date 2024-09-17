@@ -59,7 +59,7 @@ export const todos$ = observable(
 export function addTodo(text: string) {
   const id = generateId();
   // Add keyed by id to the messages$ observable to trigger a create in Supabase
-  todos$[id].set({
+  todos$[id].assign({
     id,
     text,
   });
