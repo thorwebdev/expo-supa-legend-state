@@ -17,3 +17,10 @@ npx expo prebuild
 npx expo run:android
 npx expo run:ios
 ```
+
+## How to generate types
+
+```bash
+supabase start
+supabase gen types --lang=typescript --local > utils/database.types.ts
+```
