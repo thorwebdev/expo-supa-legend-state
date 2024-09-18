@@ -5,6 +5,12 @@ Local-first Expo App with [Legend-State](https://legendapp.com/open-source/state
 - [Read the detailed tutorial](https://supabase.link/local-first-expo-legend-state)
 - [Watch the video guide](https://supabase.link/local-first-expo-legend-state-yt)
 
+## Setup
+
+- Create Supabase account at [database.new](https://database.new)
+- Create `.env.local` file by running `cp .env.local.example .env.local`
+- Add your credentials from the [Supabase Dashboard](https://supabase.com/dashboard/project/_/settings/api)
+
 ## 🚀 How to use on web
 
 - Run `yarn` or `npm install`
