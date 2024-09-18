@@ -12,7 +12,7 @@ const supabase = createClient<Database>(
   process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY,
 );
 
-// provide a function to generate ids locally
+// Provide a function to generate ids locally
 const generateId = () => uuidv4();
 
 // Create a configured sync function
@@ -35,15 +35,9 @@ export const todos$ = observable(
   customSynced({
     supabase,
     collection: "todos",
-    // Optional:
-    // Select only id and text fields
     select: (from) =>
       from.select("id,counter,text,done,created_at,updated_at,deleted"),
-    // Filter by the current user
-    // filter: (select) => select.eq('user_id', uid),
-    // Don't allow delete
     actions: ["read", "create", "update", "delete"],
-    // Realtime filter by user_id
     realtime: true,
     // Persist data and pending changes locally
     persist: {
@@ -58,7 +52,7 @@ export const todos$ = observable(
 
 export function addTodo(text: string) {
   const id = generateId();
-  // Add keyed by id to the messages$ observable to trigger a create in Supabase
+  // Add keyed by id to the todos$ observable to trigger a create in Supabase
   todos$[id].assign({
     id,
     text,
