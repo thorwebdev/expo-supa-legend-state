@@ -1,4 +1,4 @@
-# Expo App with LegendState and Supabase
+# Expo App with Legend-State and Supabase Realtime
 
 Local-first Expo App with [Legend-State](https://legendapp.com/open-source/state/v3/) and [Supabase](https://supabase.com/).
 
